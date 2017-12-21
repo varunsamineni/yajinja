@@ -93,3 +93,9 @@ if __name__ == '__main__':
          arguments['--output-file'], arguments['--standard-out'],
          arguments['--directory'])
 
+def cli():
+    arguments = docopt(__doc__, version='yajinja 0.0.1')
+    main(arguments['--input-file'], arguments['--template-file'],
+         arguments['--environment'], arguments['--allow-undefined'],
+         arguments['--output-file'], arguments['--standard-out'],
+         arguments['--directory'])
