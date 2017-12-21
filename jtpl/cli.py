@@ -62,6 +62,8 @@ def process_template(template_file, output_file, variables, undefined, std_out):
 
     rendered_template = template.render(variables)
     if std_out:
+        print('-------------')
+        print(template_file)
         print(rendered_template)
     else:
         with open(output_file, 'w') as f:
