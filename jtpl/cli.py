@@ -7,23 +7,24 @@ from jinja2 import Environment, FileSystemLoader, StrictUndefined, Undefined
 
 @click.command()
 @click.option('--input-file', '-i',
-    help="Input file to pass to the template", default=None)
-@click.option('--environment', '-e', is_flag=True, 
-    help="Concider Environment variables in template")
+              help="Input file to pass to the template", default=None)
+@click.option('--environment', '-e', is_flag=True,
+              help="Concider Environment variables in template")
 @click.option('--template-file', '-t',
-    help="Path to the template file", required=False)
+              help="Path to the template file", required=False)
 @click.option('--undefined', '-u', is_flag=True,
-    help="Allow Undefined Variables, Undefined variables evaluate to empty strings")
+              help="Allow Undefined Variables, Undefined variables evaluate to empty strings")
 @click.option('--output-file', '-o', default=None,
-    help="If specified, ouput to this file, else we will output to input_file without the extension")
+              help="If specified, ouput to this file,\
+              else we will output to input_file without the extension")
 @click.option('--std-out', '-s', is_flag=True,
-    help="don't write out template file, print to standard out instead")
+              help="don't write out template file, print to standard out instead")
 @click.option('--directory', '-d', default=None,
-    help="When specified process all *.tpl files in directory")
+              help="When specified process all *.tpl files in directory")
 def main(input_file, template_file, environment,
-    undefined, output_file, std_out, directory):
+         undefined, output_file, std_out, directory):
 
-    # Directory and template file are mutually exclusive. 
+    # Directory and template file are mutually exclusive.
     # output file is not compatible with directory.
     if directory and template_file:
         print('--directory and --input-file are mutually exclusive.')
@@ -81,3 +82,4 @@ def process_variables(input_file, environment):
 
 if __name__ == '__main__':
     main()
+
