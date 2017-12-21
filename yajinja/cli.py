@@ -87,11 +87,7 @@ def process_variables(input_file, environment):
     return {**env_variables, **input_variables}
 
 if __name__ == '__main__':
-    arguments = docopt(__doc__, version='yajinja 0.0.1')
-    main(arguments['--input-file'], arguments['--template-file'],
-         arguments['--environment'], arguments['--allow-undefined'],
-         arguments['--output-file'], arguments['--standard-out'],
-         arguments['--directory'])
+    cli()
 
 def cli():
     arguments = docopt(__doc__, version='yajinja 0.0.1')
