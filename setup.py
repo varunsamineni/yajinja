@@ -100,16 +100,19 @@ setup(
         # Trove classifiers
         # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
         'License :: OSI Approved :: MIT License',
+        'Intended Audience :: System Administrators',
+        'Intended Audience :: Developers',
+        'Natural Language :: English',
+        'Topic :: Software Development :: Build Tools',
+        'Topic :: Utilities',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2.6',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3 :: Only',
         'Programming Language :: Python :: Implementation :: CPython',
-        'Programming Language :: Python :: Implementation :: PyPy'
+        # 'Programming Language :: Python :: Implementation :: PyPy'
     ],
     # $ setup.py publish support. 
     cmdclass={
