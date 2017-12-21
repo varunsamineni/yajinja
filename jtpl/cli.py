@@ -1,8 +1,9 @@
-from jinja2 import Environment, FileSystemLoader, StrictUndefined, Undefined
-import yaml
-import click
-import os 
+import os
 import sys
+import click
+import yaml
+from jinja2 import Environment, FileSystemLoader, StrictUndefined, Undefined
+
 
 @click.command()
 @click.option('--input-file', '-i',
@@ -64,8 +65,6 @@ def process_template(template_file, output_file, variables, undefined, std_out):
     else:
         with open(output_file, 'w') as f:
             f.write(rendered_template)
-
-
 
 
 def process_variables(input_file, environment):
