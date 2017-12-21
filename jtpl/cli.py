@@ -1,26 +1,26 @@
+"""
+Usage:
+  yajinja [--input-file=<input_file> --output-file=<output_file>]
+          [--directory=<directory> | --template-file=<template_file>]
+          [options]
+  yajinja [--help -h --version]
+
+Options:
+    --input-file=<input_file> -i=<input_file>          Path to the input file
+    --output-file=<output_file> -o=<output_file>       Path to the output file
+    --directory=<directory> -d=<directory>             Path to directory containging *.tpl files
+    --template-file=<template_file> -t=<template_file> Path to a single template file
+    --standard-out -s                                  Print rendered templates to standard out
+    --environment -e                                   Concider Enivronment Variables when templating
+    --allow-undefined -u                               Allow undefined variables to be templated as empty strings
+"""
 import os
 import sys
-import click
 import yaml
 from jinja2 import Environment, FileSystemLoader, StrictUndefined, Undefined
+from docopt import docopt
 
 
-@click.command()
-@click.option('--input-file', '-i',
-              help="Input file to pass to the template", default=None)
-@click.option('--environment', '-e', is_flag=True,
-              help="Concider Environment variables in template")
-@click.option('--template-file', '-t',
-              help="Path to the template file", required=False)
-@click.option('--undefined', '-u', is_flag=True,
-              help="Allow Undefined Variables, Undefined variables evaluate to empty strings")
-@click.option('--output-file', '-o', default=None,
-              help="If specified, ouput to this file,\
-              else we will output to input_file without the extension")
-@click.option('--std-out', '-s', is_flag=True,
-              help="don't write out template file, print to standard out instead")
-@click.option('--directory', '-d', default=None,
-              help="When specified process all *.tpl files in directory")
 def main(input_file, template_file, environment,
          undefined, output_file, std_out, directory):
 
@@ -87,5 +87,9 @@ def process_variables(input_file, environment):
     return {**env_variables, **input_variables}
 
 if __name__ == '__main__':
-    main()
+    arguments = docopt(__doc__, version='yajinja 0.0.1')
+    main(arguments['--input-file'], arguments['--template-file'],
+         arguments['--environment'], arguments['--allow-undefined'],
+         arguments['--output-file'], arguments['--standard-out'],
+         arguments['--directory'])
 
