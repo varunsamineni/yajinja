@@ -12,10 +12,10 @@ from shutil import rmtree
 from setuptools import find_packages, setup, Command
 
 # Package meta-data.
-NAME = 'idprov'
-DESCRIPTION = 'CLI utility to provision accounts at The Pennsylvania State University'
-URL = 'https://git.psu.edu/djb44/idprov'
-EMAIL = 'djb44@psu.edu'
+NAME = 'jtpl'
+DESCRIPTION = 'Render jinja2 templates from input-files, or from environment variables'
+URL = 'https://github.com/whereismyjetpack/jtpl'
+EMAIL = 'dannbohn@gmail.com'
 AUTHOR = 'Dann Bohn'
 
 # What packages are required for this module to be executed?
@@ -86,10 +86,10 @@ setup(
     packages=find_packages(exclude=('tests',)),
     # If your package is a single module, use this instead of 'packages':
     # py_modules=['mypackage'],
-    data_files=[('/etc/', ['idprov.ini'])],
+    # data_files=[('/etc/', ['idprov.ini'])],
 
     entry_points={
-        'console_scripts': ['idprov=idprov:main'],
+        'console_scripts': ['jtpl=jtpl.cli:main'],
     },
     install_requires=REQUIRED,
     include_package_data=True,
