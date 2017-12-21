@@ -1,2 +1,4 @@
 *.pyc
+jtpl.egg-info/
+dist/
 venv/
