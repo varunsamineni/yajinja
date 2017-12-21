@@ -21,6 +21,9 @@ AUTHOR = 'Dann Bohn'
 # What packages are required for this module to be executed?
 REQUIRED = [
      'setuptools',
+     'pyyaml',
+     'docopt',
+     'jinja2'
 ]
 
 # The rest you shouldn't have to touch too much :)
