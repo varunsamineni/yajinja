@@ -89,7 +89,7 @@ setup(
     # data_files=[('/etc/', ['idprov.ini'])],
 
     entry_points={
-        'console_scripts': ['yajinja=yajinja.cli:main'],
+        'console_scripts': ['yajinja=yajinja.cli:cli'],
     },
     install_requires=REQUIRED,
     include_package_data=True,
