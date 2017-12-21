@@ -6,49 +6,79 @@ import sys
 
 @click.command()
 @click.option('--input-file', '-i',
-    help="Input file to pass to the template")
+    help="Input file to pass to the template", default=None)
 @click.option('--environment', '-e', is_flag=True, 
     help="Concider Environment variables in template")
 @click.option('--template-file', '-t',
-    help="Path to the template file", required=True)
+    help="Path to the template file", required=False)
 @click.option('--undefined', '-u', is_flag=True,
     help="Allow Undefined Variables, Undefined variables evaluate to empty strings")
 @click.option('--output-file', '-o', default=None,
     help="If specified, ouput to this file, else we will output to input_file without the extension")
 @click.option('--std-out', '-s', is_flag=True,
     help="don't write out template file, print to standard out instead")
+@click.option('--directory', '-d', default=None,
+    help="When specified process all *.tpl files in directory")
 def main(input_file, template_file, environment,
-    undefined, output_file, std_out):
+    undefined, output_file, std_out, directory):
 
-    if len(template_file.split('.')) < 2 and not output_file:
+    # Directory and template file are mutually exclusive. 
+    # output file is not compatible with directory.
+    if directory and template_file:
+        print('--directory and --input-file are mutually exclusive.')
+        sys.exit(1)
+
+    if directory and output_file:
+        print('--output-file is not compatible with --directory')
+        sys.exit(1)
+
+    if template_file and len(template_file.split('.')) < 2 and not output_file:
         print('template file needs an extension if output file is not specified')
         sys.exit(1)
-    else:
+    elif template_file and not output_file:
         extension_len = len(template_file.split('.')[-1]) + 1
+        output_file = template_file[:-extension_len]
 
     if undefined:
         undefined = Undefined
     else:
         undefined = StrictUndefined
 
-    input_variables = yaml.load(open(input_file))
+    # proccess variables
+    variables = process_variables(input_file, environment)
+    # Proccess template
+    if directory:
+        [process_template(directory + '/' + i, directory + '/' + i[:-4], variables, undefined, std_out) for i in os.listdir(directory) if i.endswith('.tpl')]
+    else:
+        process_template(template_file, output_file, variables, undefined, std_out)
+
+
+def process_template(template_file, output_file, variables, undefined, std_out):
     loader = FileSystemLoader(searchpath='.')
     env = Environment(loader=loader, undefined=undefined, trim_blocks=True, lstrip_blocks=True)
     template = env.get_template(template_file)
 
-    if environment:
-        env_variables = dict([(k, v) for k, v in os.environ.items()])
-        input_variables = {**env_variables, **input_variables}
-
-    if not output_file:
-        output_file = template_file[:-extension_len]
-
-    rendered_template = template.render(input_variables)
+    rendered_template = template.render(variables)
     if std_out:
         print(rendered_template)
     else:
         with open(output_file, 'w') as f:
             f.write(rendered_template)
+
+
+
+
+def process_variables(input_file, environment):
+    input_variables = {}
+    env_variables = {}
+    if not input_file:
+        environment = True
+    if input_file:
+        input_variables = yaml.load(open(input_file))
+    if environment:
+        env_variables = dict([(k, v) for k, v in os.environ.items()])
+
+    return {**env_variables, **input_variables}
 
 if __name__ == '__main__':
     main()
