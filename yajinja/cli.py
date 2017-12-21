@@ -59,6 +59,11 @@ def main(input_file, template_file, environment,
 
 
 def process_template(template_file, output_file, variables, undefined, std_out):
+    """
+    Processes a jinja template with specified variables
+    either writes them to stdout, or to specififed files based
+    on user preference
+    """
     loader = FileSystemLoader(searchpath='.')
     env = Environment(loader=loader, undefined=undefined, trim_blocks=True, lstrip_blocks=True)
     template = env.get_template(template_file)
@@ -74,6 +79,12 @@ def process_template(template_file, output_file, variables, undefined, std_out):
 
 
 def process_variables(input_file, environment):
+    """
+    Creates a dict of variables to pass through
+    to jinja. If both environment variables and
+    input file variables are specififed, we merge
+    and prefer input variables.
+    """
     input_variables = {}
     env_variables = {}
     if not input_file:
@@ -89,6 +100,9 @@ if __name__ == '__main__':
     cli()
 
 def cli():
+    """
+    calls main function with cli options
+    """
     arguments = docopt(__doc__, version='yajinja 0.0.1')
     main(arguments['--input-file'], arguments['--template-file'],
          arguments['--environment'], arguments['--allow-undefined'],
