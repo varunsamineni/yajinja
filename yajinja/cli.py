@@ -23,13 +23,12 @@ from docopt import docopt
 
 def main(input_file, template_file, environment,
          undefined, output_file, std_out, directory):
+    """
+    Proccesses Command line arguments, variables, and then templates
+    out the file
+    """
 
-    # Directory and template file are mutually exclusive.
     # output file is not compatible with directory.
-    if directory and template_file:
-        print('--directory and --input-file are mutually exclusive.')
-        sys.exit(1)
-    
     if not directory and not template_file:
         print('--directory or --template-file need to be specified')
         sys.exit(1)
