@@ -12,9 +12,9 @@ from shutil import rmtree
 from setuptools import find_packages, setup, Command
 
 # Package meta-data.
-NAME = 'jtpl'
+NAME = 'yajinja'
 DESCRIPTION = 'Render jinja2 templates from input-files, or from environment variables'
-URL = 'https://github.com/whereismyjetpack/jtpl'
+URL = 'https://github.com/whereismyjetpack/yajinja'
 EMAIL = 'dannbohn@gmail.com'
 AUTHOR = 'Dann Bohn'
 
@@ -89,7 +89,7 @@ setup(
     # data_files=[('/etc/', ['idprov.ini'])],
 
     entry_points={
-        'console_scripts': ['jtpl=jtpl.cli:main'],
+        'console_scripts': ['yajinja=yajinja.cli:main'],
     },
     install_requires=REQUIRED,
     include_package_data=True,

@@ -1,7 +1,6 @@
 *.pyc
 .vscode
 templates/
-jtpl.egg-info/
 .cache
 dist/
 build/

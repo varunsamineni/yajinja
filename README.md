@@ -1,4 +1,4 @@
-# jtpl
+# yajinja
 
 Render jinja2 templates from input-files, or from environment variables
 
