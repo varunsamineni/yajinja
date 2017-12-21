@@ -29,6 +29,10 @@ def main(input_file, template_file, environment,
     if directory and template_file:
         print('--directory and --input-file are mutually exclusive.')
         sys.exit(1)
+    
+    if not directory and not template_file:
+        print('--directory or --template-file need to be specified')
+        sys.exit(1)
 
     if directory and output_file:
         print('--output-file is not compatible with --directory')
