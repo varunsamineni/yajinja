@@ -8,7 +8,7 @@ Usage:
 Options:
     --input-file=<input_file> -i=<input_file>          Path to the input file
     --output-file=<output_file> -o=<output_file>       Path to the output file
-    --directory=<directory> -d=<directory>             Path to directory containging *.tpl files
+    --directory=<directory> -d=<directory>             Path to directory containing *.tpl files
     --template-file=<template_file> -t=<template_file> Path to a single template file
     --standard-out -s                                  Print rendered templates to standard out
     --environment -e                                   Concider Enivronment Variables when templating
