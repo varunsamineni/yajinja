@@ -53,13 +53,15 @@ def main(input_file, template_file, environment,
         undefined = StrictUndefined
 
     variables = process_variables(input_file, environment)
-    # Proccess template
-    # TODO make this more explicit
     if directory:
-        template_files = [f for f in os.listdir(directory) if f.endswith('.tpll')]
+        template_files = [f for f in os.listdir(directory) if f.endswith('.tpl')]
+        print(template_files)
         if not template_files:
             raise Exception(f'no template files found in {directory} directory')
-        [process_template(directory + '/' + i, directory + '/' + i[:-4], variables, undefined, std_out) for i in os.listdir(directory) if i.endswith('.tpl')]
+        for file in template_files:
+            template_file = f'{directory}/{file}'
+            output_file = f'{directory}/{file}'[:-4]
+            process_template(template_file, output_file, variables, undefined, std_out)
     else:
         process_template(template_file, output_file, variables, undefined, std_out)
 
@@ -70,6 +72,7 @@ def process_template(template_file, output_file, variables, undefined, std_out):
     either writes them to stdout, or to specififed files based
     on user preference
     """
+
     loader = FileSystemLoader(searchpath='.')
     env = Environment(loader=loader, undefined=undefined, trim_blocks=True, lstrip_blocks=True)
     template = env.get_template(template_file)
