@@ -21,6 +21,7 @@ from jinja2 import Environment, FileSystemLoader, StrictUndefined, Undefined
 from docopt import docopt
 
 
+
 def main(input_file, template_file, environment,
          undefined, output_file, std_out, directory):
     """
@@ -29,17 +30,19 @@ def main(input_file, template_file, environment,
     """
 
     # output file is not compatible with directory.
+    # TODO I'd like to solve this with docopt, or other method
     if not directory and not template_file:
-        print('--directory or --template-file need to be specified')
-        sys.exit(1)
+        raise Exception(f'--directory or --template-file need to be specified')
 
+    # TODO I'd like to solve this with docopt, or other method
     if directory and output_file:
-        print('--output-file is not compatible with --directory')
-        sys.exit(1)
+        raise Exception(f'--output-file is not compatible with --directory')
 
+    # If output file is not specified, we set output_file to template_file sans extension
+    # this should we do this below when looping over a directory
+    # TODO DRY this up with directory
     if template_file and len(template_file.split('.')) < 2 and not output_file:
-        print('template file needs an extension if output file is not specified')
-        sys.exit(1)
+        raise Exception('template file needs an extension if output file is not specified')
     elif template_file and not output_file:
         extension_len = len(template_file.split('.')[-1]) + 1
         output_file = template_file[:-extension_len]
@@ -49,10 +52,13 @@ def main(input_file, template_file, environment,
     else:
         undefined = StrictUndefined
 
-    # proccess variables
     variables = process_variables(input_file, environment)
     # Proccess template
+    # TODO make this more explicit
     if directory:
+        template_files = [f for f in os.listdir(directory) if f.endswith('.tpll')]
+        if not template_files:
+            raise Exception(f'no template files found in {directory} directory')
         [process_template(directory + '/' + i, directory + '/' + i[:-4], variables, undefined, std_out) for i in os.listdir(directory) if i.endswith('.tpl')]
     else:
         process_template(template_file, output_file, variables, undefined, std_out)
@@ -70,6 +76,7 @@ def process_template(template_file, output_file, variables, undefined, std_out):
 
     rendered_template = template.render(variables)
     if std_out:
+        # TODO maybe don't use print here? color the screen!
         print('-------------')
         print(template_file)
         print(rendered_template)
@@ -96,9 +103,6 @@ def process_variables(input_file, environment):
 
     return {**env_variables, **input_variables}
 
-if __name__ == '__main__':
-    cli()
-
 def cli():
     """
     calls main function with cli options
@@ -108,3 +112,8 @@ def cli():
          arguments['--environment'], arguments['--allow-undefined'],
          arguments['--output-file'], arguments['--standard-out'],
          arguments['--directory'])
+
+
+if __name__ == '__main__':
+    cli()
+
