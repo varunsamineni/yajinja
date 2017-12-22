@@ -55,7 +55,6 @@ def main(input_file, template_file, environment,
     variables = process_variables(input_file, environment)
     if directory:
         template_files = [f for f in os.listdir(directory) if f.endswith('.tpl')]
-        print(template_files)
         if not template_files:
             raise Exception(f'no template files found in {directory} directory')
         for file in template_files:
