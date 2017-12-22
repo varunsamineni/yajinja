@@ -32,11 +32,11 @@ def main(input_file, template_file, environment,
     # output file is not compatible with directory.
     # TODO I'd like to solve this with docopt, or other method
     if not directory and not template_file:
-        raise Exception(f'--directory or --template-file need to be specified')
+        raise Exception('--directory or --template-file need to be specified')
 
     # TODO I'd like to solve this with docopt, or other method
     if directory and output_file:
-        raise Exception(f'--output-file is not compatible with --directory')
+        raise Exception('--output-file is not compatible with --directory')
 
     # If output file is not specified, we set output_file to template_file sans extension
     # this should we do this below when looping over a directory
