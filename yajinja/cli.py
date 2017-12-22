@@ -11,7 +11,7 @@ Options:
     --directory=<directory> -d=<directory>             Path to directory containing *.tpl files
     --template-file=<template_file> -t=<template_file> Path to a single template file
     --standard-out -s                                  Print rendered templates to standard out
-    --environment -e                                   Concider Enivronment Variables when templating
+    --environment -e                                   Consider Enivronment Variables when templating
     --allow-undefined -u                               Allow undefined variables to be templated as empty strings
 """
 import os
@@ -21,7 +21,6 @@ from jinja2 import Environment, FileSystemLoader, StrictUndefined, Undefined
 from docopt import docopt
 
 
-
 def main(input_file, template_file, environment,
          undefined, output_file, std_out, directory):
     """
@@ -29,12 +28,9 @@ def main(input_file, template_file, environment,
     out the file
     """
 
-    # output file is not compatible with directory.
-    # TODO I'd like to solve this with docopt, or other method
     if not directory and not template_file:
         raise Exception('--directory or --template-file need to be specified')
 
-    # TODO I'd like to solve this with docopt, or other method
     if directory and output_file:
         raise Exception('--output-file is not compatible with --directory')
 
@@ -53,6 +49,7 @@ def main(input_file, template_file, environment,
         undefined = StrictUndefined
 
     variables = process_variables(input_file, environment)
+
     if directory:
         template_files = [f for f in os.listdir(directory) if f.endswith('.tpl')]
         if not template_files:
@@ -78,9 +75,8 @@ def process_template(template_file, output_file, variables, undefined, std_out):
 
     rendered_template = template.render(variables)
     if std_out:
-        # TODO maybe don't use print here? color the screen!
-        print('-------------')
         print(template_file)
+        print('--------------')
         print(rendered_template)
     else:
         with open(output_file, 'w') as f:
@@ -96,6 +92,7 @@ def process_variables(input_file, environment):
     """
     input_variables = {}
     env_variables = {}
+
     if not input_file:
         environment = True
     if input_file:
@@ -114,7 +111,6 @@ def cli():
          arguments['--environment'], arguments['--allow-undefined'],
          arguments['--output-file'], arguments['--standard-out'],
          arguments['--directory'])
-
 
 if __name__ == '__main__':
     cli()

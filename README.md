@@ -36,7 +36,7 @@ Options:
     --directory=<directory> -d=<directory>             Path to directory containing *.tpl files
     --template-file=<template_file> -t=<template_file> Path to a single template file
     --standard-out -s                                  Print rendered templates to standard out
-    --environment -e                                   Concider Enivronment Variables when templating
+    --environment -e                                   Consider Enivronment Variables when templating
     --allow-undefined -u                               Allow undefined variables to be templated as empty strings
 ```
 
