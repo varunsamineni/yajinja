@@ -1,6 +1,9 @@
 # yajinja
 
-Render jinja2 templates from input-files, or from environment variables
+Render jinja2 templates from input-files, or from environment variables.
+
+### Prerequisites
+- Python 3.6 
 
 ## Installation 
 `python setup.py install`
