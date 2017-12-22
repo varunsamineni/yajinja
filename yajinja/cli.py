@@ -12,6 +12,7 @@ Options:
     --template-file=<template_file> -t=<template_file> Path to a single template file
     --standard-out -s                                  Print rendered templates to standard out
     --environment -e                                   Consider Enivronment Variables when templating
+    --delete                                           Delete files after templating them out. No effect if --standard-out
     --allow-undefined -u                               Allow undefined variables to be templated as empty strings
 """
 import os
@@ -22,7 +23,7 @@ from docopt import docopt
 
 
 def main(input_file, template_file, environment,
-         undefined, output_file, std_out, directory):
+         undefined, output_file, std_out, directory, delete):
     """
     Proccesses Command line arguments, variables, and then templates
     out the file
@@ -43,6 +44,7 @@ def main(input_file, template_file, environment,
         extension_len = len(template_file.split('.')[-1]) + 1
         output_file = template_file[:-extension_len]
 
+
     if undefined:
         undefined = Undefined
     else:
@@ -57,12 +59,12 @@ def main(input_file, template_file, environment,
         for file in template_files:
             template_file = f'{directory}/{file}'
             output_file = f'{directory}/{file}'[:-4]
-            process_template(template_file, output_file, variables, undefined, std_out)
+            process_template(template_file, output_file, variables, undefined, std_out, delete)
     else:
-        process_template(template_file, output_file, variables, undefined, std_out)
+        process_template(template_file, output_file, variables, undefined, std_out, delete)
 
 
-def process_template(template_file, output_file, variables, undefined, std_out):
+def process_template(template_file, output_file, variables, undefined, std_out, delete):
     """
     Processes a jinja template with specified variables
     either writes them to stdout, or to specififed files based
@@ -81,6 +83,8 @@ def process_template(template_file, output_file, variables, undefined, std_out):
     else:
         with open(output_file, 'w') as f:
             f.write(rendered_template)
+        if delete:
+            os.remove(template_file)
 
 
 def process_variables(input_file, environment):
@@ -110,7 +114,7 @@ def cli():
     main(arguments['--input-file'], arguments['--template-file'],
          arguments['--environment'], arguments['--allow-undefined'],
          arguments['--output-file'], arguments['--standard-out'],
-         arguments['--directory'])
+         arguments['--directory'], arguments['--delete'])
 
 if __name__ == '__main__':
     cli()
