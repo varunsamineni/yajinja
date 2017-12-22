@@ -23,6 +23,8 @@ Render jinja2 templates from input-files, or from environment variables
 `yajinja --template-file temlates/test.tpl --environment`
 
 
+![alt text](https://i.chzbgr.com/full/6735287808/h09CE3973/ "A Ninja")
+
 ## Authors
 * **Dann Bohn** (https://github.com/whereismyjetpack)
 
