@@ -100,7 +100,7 @@ def process_variables(input_file, environment):
     if not input_file:
         environment = True
     if input_file:
-        input_variables = yaml.load(open(input_file))
+        input_variables = yaml.safe_load(open(input_file))
     if environment:
         env_variables = dict([(k, v) for k, v in os.environ.items()])
 
