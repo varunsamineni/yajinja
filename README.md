@@ -22,6 +22,24 @@ Render jinja2 templates from input-files, or from environment variables
 
 `yajinja --template-file temlates/test.tpl --environment`
 
+## Usage
+```
+Usage:
+  yajinja [--input-file=<input_file> --output-file=<output_file>]
+          [--directory=<directory> | --template-file=<template_file>]
+          [options]
+  yajinja [--help -h --version]
+
+Options:
+    --input-file=<input_file> -i=<input_file>          Path to the input file
+    --output-file=<output_file> -o=<output_file>       Path to the output file
+    --directory=<directory> -d=<directory>             Path to directory containing *.tpl files
+    --template-file=<template_file> -t=<template_file> Path to a single template file
+    --standard-out -s                                  Print rendered templates to standard out
+    --environment -e                                   Concider Enivronment Variables when templating
+    --allow-undefined -u                               Allow undefined variables to be templated as empty strings
+```
+
 
 ![alt text](https://i.chzbgr.com/full/6735287808/h09CE3973/ "A Ninja")
 
